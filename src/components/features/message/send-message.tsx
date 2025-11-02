@@ -1,7 +1,7 @@
 'use client'
 
-import client, { publish } from "@/app/utils/stomp"
-import { useStore } from "@/app/utils/store"
+import client, { publish } from "@/utils/stomp"
+import { useStore } from "@/utils/store"
 import { useState } from "react"
 
 export default function SendButton()

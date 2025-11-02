@@ -1,6 +1,7 @@
 'use client'
 
-import { useStore } from "@/app/utils/store"
+import { useStore } from "@/utils/store"
+import MessageRemoveButton from "../../features/message/remove-btn"
 
 export default function MessagesList() {
 
@@ -17,9 +18,9 @@ export default function MessagesList() {
                     <div>
                       <p>{msg.text}</p>
                     </div>
-                    {/* <div>
-                      <RemoveMsgButton id={msg.id}/>
-                    </div> */}
+                    <div>
+                      <MessageRemoveButton id={msg.id}/>
+                    </div>
                 </div>
             ))
         }

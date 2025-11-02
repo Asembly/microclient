@@ -3,7 +3,7 @@ import { revalidateTag } from "next/cache";
 import { serverInstance } from "./config"
 
 
-const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjA4OTUwMywiZXhwIjoxNzYyMDkzMTAzfQ.IQYTmzJas66c4PCEqdREW-Wqpl1nyaTmfUAk7c3PZ1Y"
+const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjExMjM2NywiZXhwIjoxNzYyMTE1OTY3fQ.ZemFNiMIaupfSASU9Q6PIZ3GrAVW0jAm-efgyuqrAug"
 
 export async function getUsers()
 {
@@ -76,6 +76,18 @@ export async function deleteMessage(msg_id: string)
     .catch(error => error)
 }
 
+export async function deleteChat(chat_id: string)
+{
+    await serverInstance.delete(`/chats/${chat_id}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            },
+        }
+    )
+    .catch(error => error)
+}
+
 export async function createChat(prevState: Chat, formData: FormData)
 {
 //    const session: { user?: { id: string }; accessToken?: string } | null = await auth()  
@@ -94,6 +106,38 @@ export async function createChat(prevState: Chat, formData: FormData)
     console.log("data: ", JSON.stringify(data));
 
     const response: Chat = await serverInstance.post(`/chats`, data,
+        {
+            headers: {
+                'Authorization': "Bearer " + access_token,
+            }
+        }
+    )
+    .then(res => res.data)
+    .catch(error => error)
+
+    revalidateTag('/', 'max')
+
+    return response
+}
+
+export async function addUserToChat(prevState: Chat, formData: FormData)
+{
+    const usersIdRaw = formData.get("users_id")?.toString() || "[]";
+
+    const usersIdArray = JSON.parse(usersIdRaw);
+
+    const data = {
+        users_id: usersIdArray  
+    };
+
+    const chat_id = formData.get("chat_id")
+
+    console.log(chat_id + "HEGKFDJ:JSKLGJ:KLDJKL:GJDSKL")
+
+    console.log("Added users: ", usersIdArray);
+    console.log("data: ", JSON.stringify(data));
+
+    const response: Chat = await serverInstance.post(`/chats/${chat_id}/add`, data,
         {
             headers: {
                 'Authorization': "Bearer " + access_token,

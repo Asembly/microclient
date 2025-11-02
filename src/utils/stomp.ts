@@ -4,7 +4,7 @@ import SockJS from "sockjs-client";
 const url:string = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:8083/ws"
 
 export const connectHeaders = {
-    'Authorization' : 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjA4OTUwMywiZXhwIjoxNzYyMDkzMTAzfQ.IQYTmzJas66c4PCEqdREW-Wqpl1nyaTmfUAk7c3PZ1Y",
+    'Authorization' : 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjExMjM2NywiZXhwIjoxNzYyMTE1OTY3fQ.ZemFNiMIaupfSASU9Q6PIZ3GrAVW0jAm-efgyuqrAug",
 };
 
 const client = new Client({

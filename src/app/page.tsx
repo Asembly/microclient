@@ -1,6 +1,7 @@
-import StompChat from "./components/features/chat-client";
-import Chat from "./components/widgets/chat";
-import ChatForm from "./components/widgets/chat-form";
+import Chat from "@/components/shared/chat";
+import ChatAddUser from "@/components/widgets/chat/add-user-form";
+import ChatForm from "@/components/widgets/chat/chat-form";
+import StompChat from "@/utils/chat";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <div className="flex">
         <Chat/>
         <ChatForm/>
+        <ChatAddUser/>
       </div>
     </div>
   );

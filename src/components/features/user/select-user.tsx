@@ -1,6 +1,6 @@
 'use client'
 
-import { useStore } from "@/app/utils/store"
+import { useStore } from "@/utils/store"
 
 export default function SelectUser(props: {id : string})
 {

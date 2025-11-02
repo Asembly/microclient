@@ -1,5 +1,5 @@
-import { getUsers } from "@/app/utils/actions"
-import SelectUser from "../features/select-user"
+import { getUsers } from "@/utils/actions"
+import SelectUser from "../../features/user/select-user"
 
 export default async function UsersList()
 {

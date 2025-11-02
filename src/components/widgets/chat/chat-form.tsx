@@ -1,23 +1,22 @@
 'use client'
-import { createChat } from "@/app/utils/actions"
+import { createChat } from "@/utils/actions"
 import React, { useActionState, useRef, useState } from "react"
-import AddUser from "../features/add-user"
-import { useCreateChatStore } from "@/app/utils/store"
+import { useCreateChatStore } from "@/utils/store"
+import UserSelectMenu from "../../features/user/select-menu"
 
 export default function ChatForm()
 {
     const [_, formAction] = useActionState(createChat, {} as any)
-    const {addedUsers} = useCreateChatStore()
+    const {addedUsers, clearAddedUsers} = useCreateChatStore()
     const formRef = useRef<HTMLFormElement>(null)
 
     const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget as HTMLFormElement);
           
-        console.log("Added Users json" + JSON.stringify(addedUsers))
-        console.log("Added Users json" + addedUsers)
         formData.append("users_id", JSON.stringify(addedUsers))
 
+        clearAddedUsers()
         try
         {
             await createChat({} as any, formData)
@@ -37,8 +36,18 @@ export default function ChatForm()
                 <div className="flex flex-col">
                     <input type="text" name="title" placeholder="название"/>
                     <div>
-                        <AddUser/>
+                        <UserSelectMenu/>
                         <button type="submit">Create</button>
+                    </div>
+                    <div>
+                        {
+                            addedUsers.map((item,i) => (
+                                <div key={i}>
+                                    {item}
+                                </div>
+                            )
+                            )
+                        }
                     </div>
                 </div>
             </form>

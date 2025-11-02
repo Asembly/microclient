@@ -1,6 +1,6 @@
 'use client'
-import { activateStompClient, deactivateStompClient, subscribe } from "@/app/utils/stomp";
-import { useStore } from "@/app/utils/store";
+import { activateStompClient, deactivateStompClient, subscribe } from "@/utils/stomp";
+import { useStore } from "@/utils/store";
 import { useEffect } from "react";
 
 export default function StompChat()

@@ -7,6 +7,8 @@ type Store = {
     messages: Message[],
     selectedUserId: string,
     selectedChatId: string,
+    removeChat: (chat_id: string) => void,
+    removeMessage: (msg_id: string) => void,
     setSelectedUserId: (user_id: string) => void,
     setSelectedChatId: (chat_id: string) => void,
     fetchChatsByUserId: (user_id: string) => Promise<void>,
@@ -22,6 +24,12 @@ export const useStore = create<Store>((set) => ({
     messages: [],
     selectedUserId: "",
     selectedChatId: "",
+    removeMessage: (msg_id: string) => {
+        set((state) => ({messages: [...state.messages.filter(item => item.id !== msg_id)]}))  
+    },
+    removeChat: (chat_id: string) => {
+        set((state) => ({chats: [...state.chats.filter(item => item.id !== chat_id)]}))  
+    },
     setSelectedUserId: (user_id: string) => {
         console.log("Selected user ID: ", user_id) 
         set({selectedUserId: user_id})
@@ -82,11 +90,10 @@ type CreateChatStore = {
 
 export const useCreateChatStore = create<CreateChatStore>((set) => ({
     addedUsers: [],
-    setAddedUsers: (user: string) => {
-        set((state) => ({addedUsers: [...state.addedUsers, user]}))        
+    setAddedUsers: (user_id: string) => {
+        set((state) => ({addedUsers: [...new Set([...state.addedUsers, user_id])]}))        
     },
     clearAddedUsers: () => {
         set({addedUsers: []})
     }
-}
-))
+}))
