@@ -4,7 +4,7 @@ import { useActionState, useRef } from "react";
 import UserSelectMenu from "../../features/user/select-menu";
 import { addUserToChat } from "@/utils/actions";
 
-export default function ChatAddUser()
+export default function UserForm()
 {
 
     const [_, formAction] = useActionState(addUserToChat, {} as any)

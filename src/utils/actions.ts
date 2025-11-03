@@ -51,6 +51,32 @@ export async function getMessagesByChatId(chat_id: string)
     return messages
 }
 
+export async function getUsersByChatId(chat_id: string)
+{
+
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
+    console.log("User chat_id" + chat_id)
+
+    const users: User[] = await serverInstance.get(`/users/chat/${chat_id}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token 
+            },
+        }
+    )
+    .then(res => res.data)
+    .catch(error => error)
+
+    console.log(users + "Пользователи чата")
+
+    if(users.length == null)
+        return []
+
+    return users 
+}
+
 export async function getChatsByUserId(user_id: string)
 {
 
@@ -218,12 +244,10 @@ export async function login(data: Login)
     .then(res => res.data)
     .catch(error => error);
 
-    console.log(response)
-
     if(isAxiosError(response))
     {
         console.log('Пользователь с такими данными не найден.')
-        return undefined
+        return response 
     }
 
     console.log("Пользователь успешно авторизовался на сервере: " + response.username)
@@ -264,13 +288,7 @@ export async function logout(refreshToken: string | undefined)
 
 export async function refresh(refreshToken: string)
 {
-
-
-   const data = {
-      refreshToken: refreshToken
-   } 
-
-   const response: AccessToken = await serverInstance.post(`/auth/refresh`,data,
+   const response: AccessToken = await serverInstance.post(`/auth/refresh/${refreshToken}`,
       {
          headers: {
             'Content-Type': "application/json"
@@ -280,8 +298,10 @@ export async function refresh(refreshToken: string)
    .then(res => res.data)
    .catch(error => error)
 
+   console.log(response)
+
    if(!response)
-    return null
+    signOut()
 
    console.log("Токен обновился на сервере: " + response.token)
 

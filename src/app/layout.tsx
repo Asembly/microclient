@@ -10,15 +10,15 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html suppressHydrationWarning>
       <body>
-        <SessionProvider>
           <Provider>
             <Theme>
+              <SessionProvider>
               {children}
+              </SessionProvider>
             </Theme>
           </Provider>
-        </SessionProvider>
       </body>
     </html>
   );

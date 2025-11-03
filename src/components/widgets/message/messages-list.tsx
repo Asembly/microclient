@@ -10,6 +10,7 @@ export default function MessagesList() {
     return (
       <div className="flex flex-col gap-2">
         {
+          messages.length == 0? "Messages empty":
             messages.map((msg,i) => (
                 <div key={i} className="flex gap-5">
                     <div className="bg-yellow-300 p-0.5 rounded-sm text-black">

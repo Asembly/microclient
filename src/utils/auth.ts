@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { login, refresh } from "./actions";
 import { schemeLogin } from "./schemes";
 import { JWT } from "next-auth/jwt";
+import { AxiosError, isAxiosError } from "axios";
 
 export const {auth, signIn, signOut, handlers} = NextAuth({
     ...authConfig,
@@ -33,11 +34,9 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
                 token.uid = user.id
             }
 
-            // console.log(token)
-
-            if(token.access?.expires_at && Date.now() > token.access?.expires_at && token.refreshToken)
+            if(token.access?.expires_at && Date.now() > token.access.expires_at && token.refresh)
             {
-                const refreshed = await refresh(token.refresh?.token || "")
+                const refreshed = await refresh(token.refresh.token)
 
                 if(!refreshed)
                 {
@@ -86,12 +85,13 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
                 return null 
             }
 
-            let response: ResponseLogin | undefined = await login(data.data) 
+            let response: ResponseLogin | AxiosError = await login(data.data) 
 
-            if(response == undefined || !response.id)
+            if(isAxiosError(response))
+            {
                 return null
+            }
 
-            console.log(response)
 
             return{
                 id: response.id,

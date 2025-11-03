@@ -1,16 +1,13 @@
 import SendButton from "@/components/features/message/send-message";
 import ChatsList from "@/components/widgets/chat/chats-list";
 import MessagesList from "@/components/widgets/message/messages-list";
-import UsersList from "@/components/widgets/user/users-list";
+import { Box, Flex } from "@chakra-ui/react";
 
 export default function Chat()
 {
     return(
-        <div className="flex flex-col gap-5">
-            {/* <UsersList/> */}
-            <ChatsList/>
+        <Box>
             <MessagesList/>
-            <SendButton/>
-        </div>
+        </Box>
     )
 }

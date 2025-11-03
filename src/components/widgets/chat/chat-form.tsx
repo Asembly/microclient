@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react"
 
 export default function ChatForm()
 {
-    const [_, formAction] = useActionState(createChat, {} as any)
     const {addedUsers, clearAddedUsers} = useCreateChatStore()
     const { data: session, status } = useSession();
     const formRef = useRef<HTMLFormElement>(null)
