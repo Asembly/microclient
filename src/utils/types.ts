@@ -28,10 +28,10 @@ type MessageChatDTO = {
 }
 
 type ResponseLogin = {
-    access_token: string,
-    refresh_token: string,
-    expires_at: number,
-    user: User
+    id: string,
+    username: string,
+    access: AccessToken,
+    refresh: RefreshToken,
 }
 
 type ResponseRefresh = {
@@ -44,7 +44,12 @@ type Login = {
 }
 
 type AccessToken = {
-    access_token: string,
+    token: string,
+    expires_at: number,
+}
+
+type RefreshToken = {
+    token: string,
     expires_at: number,
 }
 

@@ -1,12 +1,9 @@
 import { Client, frameCallbackType, messageCallbackType } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { auth } from "./auth";
+import { Session } from "next-auth";
 
 const url:string = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:8083/ws"
-
-export const connectHeaders = {
-    'Authorization' : 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjExMjM2NywiZXhwIjoxNzYyMTE1OTY3fQ.ZemFNiMIaupfSASU9Q6PIZ3GrAVW0jAm-efgyuqrAug",
-};
-
 const client = new Client({
     webSocketFactory: () => new SockJS(url),
     reconnectDelay: 5000,
@@ -30,9 +27,11 @@ export function subscribe(destination: string, callback: messageCallbackType) {
   return client.subscribe(destination, callback);
 }
 
-export function publish(destination: string, body: string) {
+export async function publish(destination: string, body: string, token: string) {
   if (client && client.connected) {
-    client.publish({ destination, body, headers:  connectHeaders});
+    client.publish({ destination, body, headers: {
+      'Authorization': 'Bearer ' + token
+    }});
   } else {
     console.warn('STOMP client not connected');
   }

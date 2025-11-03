@@ -1,3 +1,4 @@
+import LogoutBtn from "@/components/features/auth/logout-btn";
 import Chat from "@/components/shared/chat";
 import ChatAddUser from "@/components/widgets/chat/add-user-form";
 import ChatForm from "@/components/widgets/chat/chat-form";
@@ -10,6 +11,7 @@ export default function Home() {
       <div className="flex">
         <Chat/>
         <ChatForm/>
+        <LogoutBtn/>
         <ChatAddUser/>
       </div>
     </div>

@@ -7,7 +7,7 @@ export default function Chat()
 {
     return(
         <div className="flex flex-col gap-5">
-            <UsersList/>
+            {/* <UsersList/> */}
             <ChatsList/>
             <MessagesList/>
             <SendButton/>

@@ -1,17 +1,23 @@
 'use server'
 import { revalidateTag } from "next/cache";
 import { serverInstance } from "./config"
+import { AxiosError, isAxiosError } from "axios";
+import { redirect } from "next/navigation";
+import { auth, signOut } from "./auth";
+import { Session } from "next-auth";
 
 
-const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjExMjM2NywiZXhwIjoxNzYyMTE1OTY3fQ.ZemFNiMIaupfSASU9Q6PIZ3GrAVW0jAm-efgyuqrAug"
+const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjE2MjY1MSwiZXhwIjoxNzYyMTY2MjUxfQ.ru--4J2Y6CO_K7_Txp0GsXiAzBuLYQDlZThECEGhl-I"
 
 export async function getUsers()
 {
-    // const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBc2VtYmx5IiwiaXNzIjoiYXV0aDAiLCJpYXQiOjE3NjE4Mjk4NDYsImV4cCI6MTc2MTgzMzQ0Nn0.kS3HNQroAAsE9XEikGi_FjhILfE8b21ip4mq6K4M06Y"
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+    
     const users: User[] = await serverInstance.get(`/users`,
         {
             headers: {
-                'Authorization': 'Bearer ' + access_token
+                'Authorization': 'Bearer ' + token 
             },
         }
     )
@@ -25,12 +31,15 @@ export async function getUsers()
 
 export async function getMessagesByChatId(chat_id: string)
 {
-    // const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBc2VtYmx5IiwiaXNzIjoiYXV0aDAiLCJpYXQiOjE3NjE4Mjk4NDYsImV4cCI6MTc2MTgzMzQ0Nn0.kS3HNQroAAsE9XEikGi_FjhILfE8b21ip4mq6K4M06Y"
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
     console.log("Chat Id" + chat_id)
+
     const messages: Message[] = await serverInstance.get(`/messages/chat/${chat_id}`,
         {
             headers: {
-                'Authorization': 'Bearer ' + access_token
+                'Authorization': 'Bearer ' + token 
             },
         }
     )
@@ -44,12 +53,16 @@ export async function getMessagesByChatId(chat_id: string)
 
 export async function getChatsByUserId(user_id: string)
 {
-    // const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBc2VtYmx5IiwiaXNzIjoiYXV0aDAiLCJpYXQiOjE3NjE4Mjk4NDYsImV4cCI6MTc2MTgzMzQ0Nn0.kS3HNQroAAsE9XEikGi_FjhILfE8b21ip4mq6K4M06Y"
+
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
     console.log("Chat user_id" + user_id)
+
     const chats: Chat[] = await serverInstance.get(`/chats/user/${user_id}`,
         {
             headers: {
-                'Authorization': 'Bearer ' + access_token
+                'Authorization': 'Bearer ' + token 
             },
         }
     )
@@ -66,10 +79,13 @@ export async function getChatsByUserId(user_id: string)
 
 export async function deleteMessage(msg_id: string)
 {
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
     await serverInstance.delete(`/messages/${msg_id}`,
         {
             headers: {
-                'Authorization': 'Bearer ' + access_token
+                'Authorization': 'Bearer ' + token 
             },
         }
     )
@@ -78,10 +94,13 @@ export async function deleteMessage(msg_id: string)
 
 export async function deleteChat(chat_id: string)
 {
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
     await serverInstance.delete(`/chats/${chat_id}`,
         {
             headers: {
-                'Authorization': 'Bearer ' + access_token
+                'Authorization': 'Bearer ' + token 
             },
         }
     )
@@ -90,8 +109,8 @@ export async function deleteChat(chat_id: string)
 
 export async function createChat(prevState: Chat, formData: FormData)
 {
-//    const session: { user?: { id: string }; accessToken?: string } | null = await auth()  
-//    const accessToken = session?.accessToken
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
 
     const usersIdRaw = formData.get("users_id")?.toString() || "[]";
 
@@ -108,7 +127,7 @@ export async function createChat(prevState: Chat, formData: FormData)
     const response: Chat = await serverInstance.post(`/chats`, data,
         {
             headers: {
-                'Authorization': "Bearer " + access_token,
+                'Authorization': "Bearer " + token,
             }
         }
     )
@@ -122,6 +141,9 @@ export async function createChat(prevState: Chat, formData: FormData)
 
 export async function addUserToChat(prevState: Chat, formData: FormData)
 {
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
     const usersIdRaw = formData.get("users_id")?.toString() || "[]";
 
     const usersIdArray = JSON.parse(usersIdRaw);
@@ -140,7 +162,7 @@ export async function addUserToChat(prevState: Chat, formData: FormData)
     const response: Chat = await serverInstance.post(`/chats/${chat_id}/add`, data,
         {
             headers: {
-                'Authorization': "Bearer " + access_token,
+                'Authorization': "Bearer " + token 
             }
         }
     )
@@ -150,4 +172,118 @@ export async function addUserToChat(prevState: Chat, formData: FormData)
     revalidateTag('/', 'max')
 
     return response
+}
+
+export async function signUp(prevState: User, formData: FormData)
+{
+   const data = {
+      username: formData.get("username"), 
+      email: formData.get("email"), 
+      password: formData.get("password"), 
+   }
+
+   console.log(data)
+
+   const response: User | AxiosError = await serverInstance.post(`/auth/sign-up`, data,
+      {
+         headers: {
+            'Content-Type': "application/json"
+         }
+      }
+   )  
+   .then(res => res.data)
+   .catch(error => error)
+
+   if(!isAxiosError(response))
+   {
+      console.log("Пользователь успешно зарегестрировался. " + response)
+      redirect("/sign-in")
+   }
+
+   return response
+}
+
+/* /api/auth/sign-in POST */
+export async function login(data: Login)
+{
+
+
+    const response: AxiosError | ResponseLogin = await serverInstance.post(`/auth/sign-in`,data,
+        {
+            headers: {
+                'Content-Type': "application/json"
+            },
+        }
+    )  
+    .then(res => res.data)
+    .catch(error => error);
+
+    console.log(response)
+
+    if(isAxiosError(response))
+    {
+        console.log('Пользователь с такими данными не найден.')
+        return undefined
+    }
+
+    console.log("Пользователь успешно авторизовался на сервере: " + response.username)
+
+    return response 
+}
+
+/* /api/auth/logout POST */
+export async function logout(refreshToken: string | undefined)
+{
+    console.log(refreshToken)
+
+    if(refreshToken == undefined)
+        return "Refresh Token is undefined"
+
+    const session: Session | null = await auth()  
+    const token = session?.access?.token
+
+    const data = {
+        refreshToken: refreshToken
+    } 
+
+    const response = await serverInstance.post(`/auth/logout`,data,
+        {
+            headers: {
+                'Authorization': "Bearer " + token,
+                'Content-Type': "application/json"
+            },
+        }
+    )  
+    .then(res => res.data)
+    .catch(error => error)
+
+    await signOut()   
+
+    return response 
+}
+
+export async function refresh(refreshToken: string)
+{
+
+
+   const data = {
+      refreshToken: refreshToken
+   } 
+
+   const response: AccessToken = await serverInstance.post(`/auth/refresh`,data,
+      {
+         headers: {
+            'Content-Type': "application/json"
+         },
+      }
+   )  
+   .then(res => res.data)
+   .catch(error => error)
+
+   if(!response)
+    return null
+
+   console.log("Токен обновился на сервере: " + response.token)
+
+   return response
 }

@@ -1,17 +1,28 @@
 'use client'
 
-import { useStore } from "@/utils/store"
 import SelectChat from "../../features/chat/select-chat"
 import ChatRemoveButton from "../../features/chat/remove-btn"
+import { getChatsByUserId } from "@/utils/actions"
+import { Session } from "next-auth"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { auth } from "@/utils/auth"
 
 export default function ChatsList()
 {
-    const {chats} = useStore()
+    const [chats, setChats] = useState<Chat[]>([])
+    const { data: session, status } = useSession();
+
+
+    useEffect(() => {
+        if(session?.user?.id)
+            getChatsByUserId(session.user.id).then(setChats)
+    }, [status, session]) 
 
     return ( 
         <div>
            {
-            chats == null?"test":
+            chats.length == 0?"Chat not found":
             chats.map((item) => (
                 <div key={item.id} className="flex gap-5">
                     <div>
