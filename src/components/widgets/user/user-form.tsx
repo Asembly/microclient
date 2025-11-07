@@ -9,7 +9,7 @@ export default function UserForm()
 
     const [_, formAction] = useActionState(addUserToChat, {} as any)
     const {addedUsers, clearAddedUsers} = useCreateChatStore()
-    const {selectedChatId} = useStore()
+    const {selectedChat} = useStore()
     const formRef = useRef<HTMLFormElement>(null)
 
     const handleSubmit = async(e: React.FormEvent) => {
@@ -17,7 +17,7 @@ export default function UserForm()
         const formData = new FormData(e.currentTarget as HTMLFormElement);
           
         formData.append("users_id", JSON.stringify(addedUsers))
-        formData.append("chat_id", selectedChatId) 
+        formData.append("chat_id", selectedChat.id) 
 
         clearAddedUsers()
         try

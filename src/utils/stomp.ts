@@ -1,7 +1,5 @@
 import { Client, frameCallbackType, messageCallbackType } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { auth } from "./auth";
-import { Session } from "next-auth";
 
 const url:string = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:8083/ws"
 const client = new Client({
@@ -16,6 +14,7 @@ export function activateStompClient(
   client.onConnect = onConnectCallback;
   client.onStompError = onErrorCallback;
 
+  console.log("Stomp Connected!!!")
   client.activate();
 }
 

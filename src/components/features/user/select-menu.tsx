@@ -31,7 +31,7 @@ export default function UserSelectMenu()
     return(
         <div>
             <input onKeyPress={handleKeyPress} type="text" value={text} onChange={(e) => inputHandler(e.target.value)} placeholder="type user id"/>
-            <button onClick={buttonHandler} type="button">Add</button>
+            <button style={{display: text.length >= 8 ? "" : "none"}} onClick={buttonHandler} type="button">Add</button>
         </div>
     )
 }

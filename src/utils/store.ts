@@ -5,14 +5,14 @@ type Store = {
     chats: Chat[],
     users: User[],
     messages: Message[],
-    selectedUserId: string,
-    selectedChatId: string,
+    selectedUser: User, 
+    selectedChat: Chat,
     removeChat: (chat_id: string) => void,
     removeMessage: (msg_id: string) => void,
-    setSelectedUserId: (user_id: string) => void,
-    setSelectedChatId: (chat_id: string) => void,
+    setSelectedUser: (user: User) => void,
+    setSelectedChat: (chat: Chat) => void,
     fetchChatsByUserId: (user_id: string) => Promise<void>,
-    fetchMessagesByUserId: (chat_id: string) => Promise<void>,
+    fetchMessagesByChatId: (chat_id: string) => Promise<void>,
     fetchUsers: () => Promise<void>,
     addMessage: (msg: Message) => void,
     rmMessage: (msg: Message) => void,
@@ -22,21 +22,21 @@ export const useStore = create<Store>((set) => ({
     users: [],
     chats: [],
     messages: [],
-    selectedUserId: "",
-    selectedChatId: "",
+    selectedUser: {} as User,
+    selectedChat: {} as Chat,
     removeMessage: (msg_id: string) => {
         set((state) => ({messages: [...state.messages.filter(item => item.id !== msg_id)]}))  
     },
     removeChat: (chat_id: string) => {
         set((state) => ({chats: [...state.chats.filter(item => item.id !== chat_id)]}))  
     },
-    setSelectedUserId: (user_id: string) => {
-        console.log("Selected user ID: ", user_id) 
-        set({selectedUserId: user_id})
+    setSelectedUser: (user: User) => {
+        console.log("Selected user ID: ", user.id) 
+        set({selectedUser: user})
     },
-    setSelectedChatId: (chat_id: string) => {
-        console.log("Selected chat ID: ", chat_id) 
-        set({selectedChatId: chat_id})
+    setSelectedChat: (chat: Chat) => {
+        console.log("Selected chat ID: ", chat.id) 
+        set({selectedChat: chat})
     },
     fetchUsers: async() => {
         try{
@@ -62,7 +62,7 @@ export const useStore = create<Store>((set) => ({
             set({chats: []})
         }
     },
-    fetchMessagesByUserId: async(chat_id: string) => {
+    fetchMessagesByChatId: async(chat_id: string) => {
         try{
             console.log("Fetching message for chat: ", chat_id)
             const response = await getMessagesByChatId(chat_id) 
@@ -96,4 +96,16 @@ export const useCreateChatStore = create<CreateChatStore>((set) => ({
     clearAddedUsers: () => {
         set({addedUsers: []})
     }
+}))
+
+type AdaptiveDesignStore = {
+    isMobile: boolean
+    setIsMobile: (isMobile: boolean) => void 
+}
+
+export const useAdaptiveStore = create<AdaptiveDesignStore>((set) => ({
+    isMobile: false,
+    setIsMobile: (isMobile) => {
+        set({isMobile: isMobile})
+    },
 }))

@@ -1,13 +1,10 @@
 'use server'
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { serverInstance } from "./config"
 import { AxiosError, isAxiosError } from "axios";
 import { redirect } from "next/navigation";
 import { auth, signOut } from "./auth";
 import { Session } from "next-auth";
-
-
-const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOaWtpc3QiLCJpc3MiOiJhdXRoMCIsImlhdCI6MTc2MjE2MjY1MSwiZXhwIjoxNzYyMTY2MjUxfQ.ru--4J2Y6CO_K7_Txp0GsXiAzBuLYQDlZThECEGhl-I"
 
 export async function getUsers()
 {
@@ -159,8 +156,6 @@ export async function createChat(prevState: Chat, formData: FormData)
     )
     .then(res => res.data)
     .catch(error => error)
-
-    revalidateTag('/', 'max')
 
     return response
 }

@@ -7,13 +7,13 @@ export default function UsersList()
 {
 
     const [users, setUsers] = useState<User[]>([])
-    const { selectedChatId } = useStore();
+    const { selectedChat } = useStore();
 
 
     useEffect(() => {
-        getUsersByChatId(selectedChatId).then(setUsers)
-        console.log(selectedChatId + "SElected chat")
-    }, [selectedChatId]) 
+        getUsersByChatId(selectedChat.id).then(setUsers)
+        console.log(selectedChat.id + "Selected chat") 
+    }, [selectedChat]) 
 
     return(
         <div>

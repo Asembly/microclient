@@ -10,24 +10,27 @@ export default function ChatForm()
     const {addedUsers, clearAddedUsers} = useCreateChatStore()
     const { data: session, status } = useSession();
     const formRef = useRef<HTMLFormElement>(null)
+    const [text, setText] = useState("")
 
     const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget as HTMLFormElement);
           
         formData.append("users_id", JSON.stringify([...addedUsers, session?.user.id]))
+        formData.append("title", text)
+        setText("")
 
         clearAddedUsers()
         try
         {
             await createChat({} as any, formData)
+
             console.log("Chat is created!")
         }
         catch(e)
         {
             console.log("Axios error")
         }
-
     }
 
     return(
@@ -35,7 +38,7 @@ export default function ChatForm()
             <form ref={formRef} onSubmit={handleSubmit} method="POST">
                 <h1>Создать чат</h1>
                 <div className="flex flex-col">
-                    <input type="text" name="title" placeholder="название"/>
+                    <input type="text" value={text} onChange={(e) => setText(e.target.value)} name="title" placeholder="название"/>
                     <div>
                         <UserSelectMenu/>
                         <button type="submit">Create</button>

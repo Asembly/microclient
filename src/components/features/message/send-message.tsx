@@ -8,7 +8,7 @@ import { useState } from "react"
 export default function SendButton()
 {
     
-    const {selectedChatId, selectedUserId} = useStore()
+    const {selectedChat} = useStore()
     const [text, setText] = useState("")
     const { data: session, status } = useSession();
     const token = session?.access?.token
@@ -25,8 +25,8 @@ export default function SendButton()
             console.log("Sending message...")
             if(token)
             {
-                publish(`/app/chat/sendMessage/${selectedChatId}`,
-                    JSON.stringify({text: text, author_id: session?.user.id, chat_id: selectedChatId}), token )
+                publish(`/app/chat/sendMessage/${selectedChat.id}`,
+                    JSON.stringify({text: text, author_id: session?.user.id, chat_id: selectedChat.id}), token )
             }
             setText("")
         }

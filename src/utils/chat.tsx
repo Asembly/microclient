@@ -5,14 +5,14 @@ import { useEffect } from "react";
 
 export default function StompChat()
 {
-    const { addMessage, selectedChatId } = useStore() 
+    const { addMessage, selectedChat } = useStore() 
 
     useEffect(() => {
-        if (!selectedChatId) return;
+        if (!selectedChat) return;
         activateStompClient(
             () => {
                 console.log("Connected to WebSocket STOMP server")
-                subscribe(`/topic/chat/${selectedChatId}`, (message: any) => {
+                subscribe(`/topic/chat/${selectedChat.id}`, (message: any) => {
                     console.log("Recieved message: " + message.body)
                     addMessage(JSON.parse(message.body));
                 })
@@ -26,7 +26,7 @@ export default function StompChat()
         return () => {
             deactivateStompClient();
         };
-    }, [selectedChatId]);
+    }, [selectedChat]);
 
     return null
 }

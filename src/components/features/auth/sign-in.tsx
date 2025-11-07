@@ -13,15 +13,7 @@ export default function SignIn()
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const response = await signIn("credentials", { username, password, redirect: false ,callbackUrl: "/" }); 
-
-        // if(response.error)
-        // {
-        //     console.log('error')
-        // }
-        // else{
-            redirect('/')
-        // }
-
+        redirect('/')
     };
 
     return(
@@ -37,8 +29,8 @@ export default function SignIn()
                     <Input name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" flex="1" />
                 </Field.Root>
 
-                <Field.Root orientation="horizontal">
-                    <Button type="submit" className="w-full">Авторизоваться</Button>
+                <Field.Root orientation="horizontal" >
+                    <Button type="submit" w={"full"}>Авторизоваться</Button>
                 </Field.Root>
 
                 <Field.Root orientation="horizontal" flexDirection={'row'} justifyContent={'center'}>

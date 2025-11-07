@@ -34,25 +34,37 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
                 token.uid = user.id
             }
 
-            if(token.access?.expires_at && Date.now() > token.access.expires_at && token.refresh)
+            console.log(token)
+            console.log(Date.now())
+
+            //Проверка действия Refresh токена
+            if(token.refresh && Date.now() > token.refresh?.expires_at)
+                token.refresh = undefined;
+
+            //Проверка действия Access токена
+            if((token.access?.expires_at && Date.now() > token.access.expires_at)  && token.refresh)
             {
                 const refreshed = await refresh(token.refresh.token)
 
                 if(!refreshed)
                 {
                     console.log("Ошибка, токен не обновился.")
-                    return null
+                    token.refresh == undefined
+                    return token
                 }
 
                 token.access.token = refreshed?.token
                 token.access.expires_at = refreshed?.expires_at; 
 
-                if(token.accessToken && token.expires_at)
+                if(token.access.token && token.access.expires_at)
                 {
-                    console.log("Токен обновился в сессии: " + token.accessToken)
-                    console.log("Новое истечение времени: " + token.expires_at)
+                    console.log("Токен обновился в сессии: " + token.access.token)
+                    console.log("Новое истечение времени: " + token.access.token)
                 }
             }
+
+            if(token && token.access?.token == null)
+                return null
 
            return token 
         },

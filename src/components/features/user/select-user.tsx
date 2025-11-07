@@ -2,18 +2,18 @@
 
 import { useStore } from "@/utils/store"
 
-export default function SelectUser(props: {id : string})
+export default function SelectUser(props: {user: User})
 {
-    const {selectedUserId, setSelectedUserId, fetchChatsByUserId, chats} = useStore()
+    const {selectedUser, setSelectedUser, fetchChatsByUserId, chats} = useStore()
 
     const handler = async() => {
-        setSelectedUserId(props.id)
-        await fetchChatsByUserId(props.id) 
+        setSelectedUser(props.user)
+        await fetchChatsByUserId(props.user.id) 
     }
 
     return(
         <div>
-            <input checked={selectedUserId === props.id} type="radio" className="cursor-pointer" onChange={handler}/>
+            <input checked={selectedUser === props.user} type="radio" className="cursor-pointer" onChange={handler}/>
         </div>
     ) 
 }

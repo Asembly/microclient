@@ -2,18 +2,18 @@
 
 import { useStore } from "@/utils/store"
 
-export default function SelectChat(props: {id : string})
+export default function SelectChat(props: {chat: Chat})
 {
-    const {selectedChatId, setSelectedChatId, fetchMessagesByUserId} = useStore()
+    const {selectedChat, setSelectedChat, fetchMessagesByChatId} = useStore()
 
     const handler = async() => {
-        setSelectedChatId(props.id)
-        await fetchMessagesByUserId(props.id) 
+        setSelectedChat(props.chat)
+        await fetchMessagesByChatId(props.chat.id) 
     }
 
     return(
         <div>
-            <input checked={selectedChatId === props.id} type="radio" className="cursor-pointer" onChange={handler}/>
+            <input checked={selectedChat === props.chat} type="radio" className="cursor-pointer" onChange={handler}/>
         </div>
     ) 
 }

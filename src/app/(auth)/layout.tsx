@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 
 export default function AuthLayout({
   children,
@@ -6,8 +6,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Container className="flex justify-center items-center h-screen">
+    <Flex alignItems={"center"} height={"dvh"} justifyContent={"center"}>
         {children}
-    </Container>
+    </Flex>
+    
   );
 }

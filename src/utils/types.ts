@@ -16,7 +16,7 @@ type Chat = {
 type Message = {
     id: string,
     text: string,
-    author_id: string,
+    author: string,
     chat_id: string,
     created_at: Date
 }

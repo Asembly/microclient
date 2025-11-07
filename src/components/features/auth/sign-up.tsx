@@ -21,7 +21,7 @@ export default function SignUp()
                 </Field.Root>
 
                 <Field.Root orientation="horizontal">
-                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
+                    <Button type="submit" w={"full"}>Зарегистрироваться</Button>
                 </Field.Root>
 
                 <Field.Root orientation="horizontal" flexDirection={'row'} justifyContent={'center'}>

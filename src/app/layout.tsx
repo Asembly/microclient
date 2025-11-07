@@ -1,5 +1,6 @@
+import { SessionKeepAlive } from "@/components/features/auth/session-alive";
 import { Provider } from "@/components/ui/provider";
-import "@/styles/globals.css";
+import { ScreenProvider } from "@/components/ui/screen-provider";
 import { Container, Theme } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 
@@ -12,13 +13,16 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <body>
-          <Provider>
-            <Theme>
-              <SessionProvider>
-              {children}
-              </SessionProvider>
-            </Theme>
-          </Provider>
+            <Provider>
+              <Theme>
+                <SessionProvider>
+                  <SessionKeepAlive/>
+                  <ScreenProvider>
+                      {children}
+                  </ScreenProvider>
+                </SessionProvider>
+              </Theme>
+            </Provider>
       </body>
     </html>
   );

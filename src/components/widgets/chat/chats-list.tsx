@@ -7,12 +7,12 @@ import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { auth } from "@/utils/auth"
+import { Flex } from "@chakra-ui/react"
 
 export default function ChatsList()
 {
     const [chats, setChats] = useState<Chat[]>([])
     const { data: session, status } = useSession();
-
 
     useEffect(() => {
         if(session?.user?.id)
@@ -24,20 +24,20 @@ export default function ChatsList()
            {
             chats.length == 0?"Chat not found":
             chats.map((item) => (
-                <div key={item.id} className="flex gap-5">
-                    <div>
+                <Flex key={item.id} gap={2}>
+                    {/* <div>
                     {
                             item.id
                     }
-                    </div>
+                    </div> */}
                     <div>
                         {
                             item.title
                         }
                     </div>
-                    <SelectChat id={item.id}/>
+                    <SelectChat chat={item}/>
                     <ChatRemoveButton id={item.id}/>
-                </div>
+                </Flex>
             ))
            } 
         </div>
