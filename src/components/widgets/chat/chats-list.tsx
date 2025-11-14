@@ -1,13 +1,12 @@
 'use client'
 
-import SelectChat from "../../features/chat/select-chat"
-import ChatRemoveButton from "../../features/chat/remove-btn"
 import { getChatsByUserId } from "@/utils/actions"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { auth } from "@/utils/auth"
-import { Flex } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
+import ChatElem from "./chat-element"
 
 export default function ChatsList()
 {
@@ -20,26 +19,17 @@ export default function ChatsList()
     }, [status, session]) 
 
     return ( 
-        <div>
+        <Box>
            {
-            chats.length == 0?"Chat not found":
+            chats.length == 0?
+            <Box fontSize={"0.8rem"}>
+                Чатов в данный момент нет
+            </Box>
+            :
             chats.map((item) => (
-                <Flex key={item.id} gap={2}>
-                    {/* <div>
-                    {
-                            item.id
-                    }
-                    </div> */}
-                    <div>
-                        {
-                            item.title
-                        }
-                    </div>
-                    <SelectChat chat={item}/>
-                    <ChatRemoveButton id={item.id}/>
-                </Flex>
+                <ChatElem key={item.id} chat={item}/>
             ))
            } 
-        </div>
+        </Box>
     )
 }

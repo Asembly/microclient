@@ -16,6 +16,12 @@ const config = defineConfig({
             _dark: "#C7EAFD" 
           } as any 
         },
+        error: {
+          value: {
+            base:"",
+            _dark: "#FF6B6B"
+          } as any
+        },
         button: { 
           value: {
             base: "",
@@ -123,6 +129,7 @@ const config = defineConfig({
     "*": {
       fontFamily: "Montserrat, regular, sans-serif",
       fontSize: "14px",
+      color: "text"
     },
     "&::-webkit-scrollbar": {
       width: "6px",

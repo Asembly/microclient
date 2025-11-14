@@ -21,16 +21,15 @@ export default function SignUp()
                 </Field.Root>
 
                 <Field.Root orientation="horizontal">
-                    <Button type="submit" w={"full"}>Зарегистрироваться</Button>
+                    <Button color={"text"} bg={"button"} type="submit" w={"full"}>Зарегистрироваться</Button>
                 </Field.Root>
 
                 <Field.Root orientation="horizontal" flexDirection={'row'} justifyContent={'center'}>
                     <Text>
                         есть аккаунт? {" "} 
                         <Link
-                            variant="underline"
                             href="/sign-in"
-                            colorPalette="teal"
+                            color={"accent"}
                         >
                             логин
                         </Link>

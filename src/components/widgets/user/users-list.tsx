@@ -2,6 +2,7 @@
 import { getUsersByChatId } from "@/utils/actions"
 import { useEffect, useState } from "react";
 import { useStore } from "@/utils/store";
+import { Box } from "@chakra-ui/react";
 
 export default function UsersList()
 {
@@ -9,6 +10,7 @@ export default function UsersList()
     const [users, setUsers] = useState<User[]>([])
     const { selectedChat } = useStore();
 
+    console.log(users + "Пользователи в чате")
 
     useEffect(() => {
         getUsersByChatId(selectedChat.id).then(setUsers)
@@ -16,7 +18,7 @@ export default function UsersList()
     }, [selectedChat]) 
 
     return(
-        <div>
+        <Box>
             {
                 users.map((item) => (
                     <div key={item.id} className="flex gap-5">
@@ -28,6 +30,6 @@ export default function UsersList()
                     </div>
                 ))
             }
-        </div>
+        </Box>
     )
 }

@@ -14,12 +14,10 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <body>
             <Provider>
-              <Theme>
+              <Theme bg={"myBg"}>
                 <SessionProvider>
                   <SessionKeepAlive/>
-                  <ScreenProvider>
                       {children}
-                  </ScreenProvider>
                 </SessionProvider>
               </Theme>
             </Provider>

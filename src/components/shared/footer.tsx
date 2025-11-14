@@ -3,6 +3,8 @@ import { Flex, Text, Box } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import SendButton from "../features/message/send-message";
+import { ColorModeButton } from "../ui/color-mode";
+import { useStore } from "@/utils/store";
 
 export default function Footer() {
   const { data: session } = useSession();
@@ -11,6 +13,7 @@ export default function Footer() {
 
   const username = session?.user?.name || "User";
   const userId = session?.user?.id || "unknown";
+  const {selectedChat} = useStore();
 
   const handleCopy = async () => {
     if (userId) {
@@ -25,14 +28,14 @@ export default function Footer() {
       <Flex
         flexShrink={0}
         bg="topBar"
-        h={78}
+        h="60px"
         align="center"
         px={4}
         gap={2}
         w="100%"
+        justifyContent={"space-between"}
       >
-        {/* Левая часть: Имя и id */}
-        <Box position="relative" ref={leftRef} minW="0">
+        <Box position="relative" ref={leftRef} minW="0" maxW={"min-content"} flex={"0 0 auto"} mdDown={{display:"none"}}>
           <Flex
             align="center"
             gap={2}
@@ -60,7 +63,6 @@ export default function Footer() {
               #{userId}
             </Text>
           </Flex>
-          {/* Оповещение прямо над ником+ID */}
           {copied && (
             <Box
               position="absolute"
@@ -83,12 +85,21 @@ export default function Footer() {
           )}
         </Box>
 
-        {/* Центр: кнопка */}
-        <Flex flex="1" justify="center">
-          <SendButton/>
+        <Flex flex="0.5" justify="center" mdDown={{flex:"1"}}>
+          {
+            selectedChat.id == undefined
+            ?
+            ""
+            :
+            <SendButton/>
+          }
         </Flex>
-        {/* Правая часть */}
-        <Flex minW="60px" justify="flex-end"></Flex>
+        <Flex minW="60px" flex={"0 0 auto"} justify="flex-end" mdDown={{display:"none"}}>
+            <Box>
+                <ColorModeButton/>
+            </Box>
+        </Flex>
+
       </Flex>
     </Box>
   );

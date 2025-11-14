@@ -2,6 +2,7 @@
 
 import client, { publish } from "@/utils/stomp"
 import { useStore } from "@/utils/store"
+import { FieldsetLegend, Flex, IconButton, Input } from "@chakra-ui/react"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
 
@@ -33,9 +34,39 @@ export default function SendButton()
     }
 
     return(
-        <div>
-            <input onKeyPress={handleKeyPress} type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="message"/>
-            <button onClick={sendMessage}>Send</button>
-        </div>
+        <Flex
+      w="100%"
+      align="center"
+      px={2}
+      py={1}
+      gap={2}
+    >
+      <Input
+        onKeyPress={handleKeyPress}
+        value={text}
+        onChange={e => setText(e.target.value)}
+        bg="blue.50"
+        color="msgText"
+        border="none"
+        placeholder={`написать в ${selectedChat.title}`}
+        _placeholder={{ color: "gray.500" }}
+        h="32px"
+        fontSize="sm"
+        flex="1"
+        rounded="md"
+        focusRingColor="transparent"
+        _focus={{ boxShadow: "none" }}
+        _active={{ boxShadow: "none" }}
+      />
+      <IconButton
+        onClick={sendMessage}
+        aria-label="Создать чат"
+        bg="blue.50"
+        color="blue.400"
+        _hover={{ bg: "blue.200", color: "blue.700" }}
+        rounded="md"
+        size="sm"
+      />
+    </Flex>
     )
 }

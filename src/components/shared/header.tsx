@@ -15,7 +15,6 @@ import { useSession } from "next-auth/react";
 export default function MessengerHeader() {
 
     const {selectedChat} = useStore()
-    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <Flex
@@ -23,7 +22,7 @@ export default function MessengerHeader() {
         align="center"
         justify="space-between"
         bg="topBar"
-        height="78px"
+        height="60px"
         width="100%"
         px={4}>
             <Box>
@@ -92,7 +91,7 @@ export default function MessengerHeader() {
                 </Drawer.Root>
             </Box>
             <Box>
-                <ColorModeButton/>
+                <LogoutBtn/>
             </Box>
         </Flex>
     );

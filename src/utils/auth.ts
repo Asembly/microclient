@@ -86,24 +86,15 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
         },
         async authorize(credentials, request): Promise<any> {
 
-            const data = schemeLogin.safeParse({
+            const data = ({
                 username: credentials.username,
                 password: credentials.password
             })
 
-            if(!data.success)
-            {
-                console.log("Данные о пользователе не были введены верно.")
-                return null 
-            }
-
-            let response: ResponseLogin | AxiosError = await login(data.data) 
+            let response: ResponseLogin | AxiosError = await login(data) 
 
             if(isAxiosError(response))
-            {
                 return null
-            }
-
 
             return{
                 id: response.id,

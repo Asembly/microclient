@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getChatsByUserId, getMessagesByChatId, getUsers } from "./actions";
+import Chat from "@/components/widgets/chat/chat";
 
 type Store = { 
     chats: Chat[],
@@ -11,6 +12,7 @@ type Store = {
     removeMessage: (msg_id: string) => void,
     setSelectedUser: (user: User) => void,
     setSelectedChat: (chat: Chat) => void,
+    clearSelectedChat: () => void,
     fetchChatsByUserId: (user_id: string) => Promise<void>,
     fetchMessagesByChatId: (chat_id: string) => Promise<void>,
     fetchUsers: () => Promise<void>,
@@ -37,6 +39,9 @@ export const useStore = create<Store>((set) => ({
     setSelectedChat: (chat: Chat) => {
         console.log("Selected chat ID: ", chat.id) 
         set({selectedChat: chat})
+    },
+    clearSelectedChat: () => {
+        set({selectedChat: {} as Chat})
     },
     fetchUsers: async() => {
         try{
@@ -66,7 +71,8 @@ export const useStore = create<Store>((set) => ({
         try{
             console.log("Fetching message for chat: ", chat_id)
             const response = await getMessagesByChatId(chat_id) 
-            set({messages: response})
+            let messages = Array.isArray(response) ? response : []
+            set({messages: messages})
         }
         catch(e) 
         {
