@@ -1,7 +1,8 @@
 'use client'
 import MessageRemoveButton from "@/components/features/message/remove-btn";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Menu, Portal, Text } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { LuBeer, LuEllipsis } from "react-icons/lu";
 
 export default function MessageElement(props: {msg: Message})
 {
@@ -10,12 +11,12 @@ export default function MessageElement(props: {msg: Message})
 
     return(
         <Flex
-            key={props.msg.id}
             gap={2}
             align="flex-start"
             w="full"
             px={4}
             py={2}
+            _hover={{ bg: "rgba(0, 0, 0, 0.03)"}}
           >
             <Box
               w="30px"
@@ -33,8 +34,28 @@ export default function MessageElement(props: {msg: Message})
               <Text fontSize="sm" whiteSpace="pre-line" wordBreak={"break-word"} color={"text"}>
                 {props.msg.text}
               </Text>
+              
             </Box> 
-            <MessageRemoveButton id={props.msg.id} />
+            {/* <MessageRemoveButton id={props.msg.id} /> */}
+            <Box _hover={{cursor: "pointer"}} mt={1} color={"msgText"}>
+              <Menu.Root>
+              <Menu.Trigger asChild>
+                <LuEllipsis size={18} />
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    <Menu.Item display={session?.user.name == props.msg.author ?"" : "none"} value="new-txt-a" _hover={{cursor: "pointer"}} mt={1} color={"msgText"}>
+                      <MessageRemoveButton id={props.msg.id}/>
+                    </Menu.Item>
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
+            </Box>
+            {/* <Text fontSize="sm" whiteSpace="pre-line" wordBreak={"break-word"} color={"text"}>
+                {props.msg.created_at}
+            </Text> */}
           </Flex>
     )
 }

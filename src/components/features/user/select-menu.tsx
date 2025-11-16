@@ -1,6 +1,7 @@
 'use client'
 
 import { useCreateChatStore } from "@/utils/store"
+import { Button, Flex, Input } from "@chakra-ui/react"
 import { useState } from "react"
 
 export default function UserSelectMenu()
@@ -29,9 +30,9 @@ export default function UserSelectMenu()
     }
 
     return(
-        <div>
-            <input onKeyPress={handleKeyPress} type="text" value={text} onChange={(e) => inputHandler(e.target.value)} placeholder="type user id"/>
-            <button style={{display: text.length >= 8 ? "" : "none"}} onClick={buttonHandler} type="button">Add</button>
-        </div>
+        <Flex alignItems={"center"} gap={2}>
+            <Input size={"2xs"} onKeyPress={handleKeyPress} type="text" value={text} onChange={(e) => inputHandler(e.target.value)} placeholder="id пользователя"/>
+            <Button size={"2xs"} fontSize={"2xs"} disabled={text.length < 8 || text.length > 8 } onClick={buttonHandler} type="button">добавить</Button>
+        </Flex>
     )
 }

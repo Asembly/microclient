@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { auth } from "@/utils/auth"
 import { Box, Flex } from "@chakra-ui/react"
 import ChatElem from "./chat-element"
+import ChatElement from "./chat-element"
 
 export default function ChatsList()
 {
@@ -19,7 +20,7 @@ export default function ChatsList()
     }, [status, session]) 
 
     return ( 
-        <Box>
+        <Flex direction={"column"} w={"100%"} alignItems={"center"}>
            {
             chats.length == 0?
             <Box fontSize={"0.8rem"}>
@@ -27,9 +28,9 @@ export default function ChatsList()
             </Box>
             :
             chats.map((item) => (
-                <ChatElem key={item.id} chat={item}/>
+                    <ChatElement key={item.id} chat={item}/>
             ))
            } 
-        </Box>
+        </Flex>
     )
 }

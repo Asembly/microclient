@@ -1,39 +1,45 @@
 'use client'
 import ChatForm from "@/components/widgets/chat/chat-form";
-import { Box, Button, Menu, Portal } from "@chakra-ui/react";
+import { Box, Button, CloseButton, Dialog, Menu, Portal } from "@chakra-ui/react";
 
 export default function CreateChatBtn()
 {
     return (
         <Box w={"100%"} display="flex" justifyContent="center">
-            <Menu.Root>
-                <Menu.Trigger asChild w={"90%"}>
-                    {/* <Button variant="outline" size="sm">
-                    Open
-                    </Button> */}
+            <Dialog.Root size={{ mdDown: "full", md: "lg" }}>
+                <Dialog.Trigger asChild>
                     <Button
-                        mb={6}
-                        px={2}
-                        bg="button"
-                        rounded="xl"
-                        textAlign="center"
-                        fontSize="md"
-                        py={2}
-                        color={"text"}
-                        cursor="pointer"
-                    >
-                        Создать чат
-                    </Button>
-                </Menu.Trigger>
+                                    mb={6}
+                                    px={2}
+                                    bg="button"
+                                    rounded="xl"
+                                    textAlign="center"
+                                    fontSize="md"
+                                    py={2}
+                                    w={"90%"}
+                                    color={"text"}
+                                    cursor="pointer"
+                                >
+                                    Создать чат
+                                </Button>
+                </Dialog.Trigger>
                 <Portal>
-                    <Menu.Positioner>
-                    <Menu.Content>
-                        {/* <Menu.Item value="export">Export</Menu.Item> */}
-                        <ChatForm/>
-                    </Menu.Content>
-                    </Menu.Positioner>
+                    <Dialog.Backdrop />
+                    <Dialog.Positioner>
+                    <Dialog.Content bg={"myBg"}>
+                        <Dialog.Header>
+                        <Dialog.Title>Приглашения</Dialog.Title>
+                        </Dialog.Header>
+                        <Dialog.Body>
+                            <ChatForm/>
+                        </Dialog.Body>
+                        <Dialog.CloseTrigger asChild>
+                            <CloseButton size="sm" />
+                        </Dialog.CloseTrigger>
+                    </Dialog.Content>
+                    </Dialog.Positioner>
                 </Portal>
-            </Menu.Root>
+            </Dialog.Root>
         </Box>
     )
 }

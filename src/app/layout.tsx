@@ -14,7 +14,7 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <body>
             <Provider>
-              <Theme bg={"myBg"}>
+              <Theme>
                 <SessionProvider>
                   <SessionKeepAlive/>
                       {children}

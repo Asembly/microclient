@@ -2,6 +2,8 @@
 
 import { deleteMessage } from "@/utils/actions"
 import { useStore } from "@/utils/store"
+import { Box, Flex } from "@chakra-ui/react"
+import { LuBeer } from "react-icons/lu"
 
 export default function MessageRemoveButton(props: {id: string})
 {
@@ -13,8 +15,13 @@ export default function MessageRemoveButton(props: {id: string})
     }
 
     return(
-        <div>
-            <button onClick={() => handler()}>X</button>
-        </div>
+        <Box onClick={() => handler()}>
+            <Flex gap={2}>
+                <LuBeer size={15}/>
+                <Box>
+                    Delete
+                </Box>
+            </Flex>
+        </Box>
     )
 }

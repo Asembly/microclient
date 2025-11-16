@@ -5,6 +5,7 @@ import { AxiosError, isAxiosError } from "axios";
 import { redirect } from "next/navigation";
 import { auth, signOut } from "./auth";
 import { Session } from "next-auth";
+import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
 
 export async function getUsers()
 {
@@ -26,14 +27,14 @@ export async function getUsers()
     return users
 }
 
-export async function getMessagesByChatId(chat_id: string)
+export async function getMessagesByChatId(chat_id: string, beforeDate?: string | null)
 {
     const session: Session | null = await auth()  
     const token = session?.access?.token
 
     console.log("Chat Id" + chat_id)
 
-    const messages: Message[] = await serverInstance.get(`/messages/chat/${chat_id}`,
+    const messages: MessageLazy = await serverInstance.get(`/messages/chat/${chat_id}?beforeDate=${beforeDate || ''}`,
         {
             headers: {
                 'Authorization': 'Bearer ' + token 
@@ -195,14 +196,8 @@ export async function addUserToChat(prevState: Chat, formData: FormData)
     return response
 }
 
-export async function signUp(prevState: User, formData: FormData)
+export async function signUp(data: SignUp)
 {
-   const data = {
-      username: formData.get("username"), 
-      email: formData.get("email"), 
-      password: formData.get("password"), 
-   }
-
    console.log(data)
 
    const response: User | AxiosError = await serverInstance.post(`/auth/sign-up`, data,
@@ -217,7 +212,7 @@ export async function signUp(prevState: User, formData: FormData)
 
    if(!isAxiosError(response))
    {
-      console.log("Пользователь успешно зарегестрировался. " + response)
+      console.log("Пользователь успешно зарегистрировался. " + response)
       redirect("/sign-in")
    }
 

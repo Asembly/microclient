@@ -6,6 +6,7 @@ type Store = {
     chats: Chat[],
     users: User[],
     messages: Message[],
+    hasMore: boolean,
     selectedUser: User, 
     selectedChat: Chat,
     removeChat: (chat_id: string) => void,
@@ -15,6 +16,7 @@ type Store = {
     clearSelectedChat: () => void,
     fetchChatsByUserId: (user_id: string) => Promise<void>,
     fetchMessagesByChatId: (chat_id: string) => Promise<void>,
+    loadMessages: (chat_id: string, beforeDate?: string) => Promise<void>, 
     fetchUsers: () => Promise<void>,
     addMessage: (msg: Message) => void,
     rmMessage: (msg: Message) => void,
@@ -24,6 +26,7 @@ export const useStore = create<Store>((set) => ({
     users: [],
     chats: [],
     messages: [],
+    hasMore: false,
     selectedUser: {} as User,
     selectedChat: {} as Chat,
     removeMessage: (msg_id: string) => {
@@ -70,9 +73,22 @@ export const useStore = create<Store>((set) => ({
     fetchMessagesByChatId: async(chat_id: string) => {
         try{
             console.log("Fetching message for chat: ", chat_id)
-            const response = await getMessagesByChatId(chat_id) 
-            let messages = Array.isArray(response) ? response : []
-            set({messages: messages})
+            const response = (await getMessagesByChatId(chat_id))
+            let messages = Array.isArray(response.messages) ? response.messages : []
+            set({messages: messages.reverse(), hasMore: response.hasMore})
+        }
+        catch(e) 
+        {
+            console.error("Error fetching chats: ", e)
+            set({messages: []})
+        }
+    },
+    loadMessages: async(chat_id: string, beforeDate?: string) => {
+        try{
+            const response = await getMessagesByChatId(chat_id,beforeDate)
+            let messages = Array.isArray(response.messages) ? response.messages : []
+            console.log(response.messages)
+            set((state) => ({messages: [ ...messages.reverse(), ...state.messages], hasMore: response.hasMore}))
         }
         catch(e) 
         {

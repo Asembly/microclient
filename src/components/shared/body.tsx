@@ -8,6 +8,7 @@ import UserForm from "../widgets/user/user-form";
 import { useScreen } from "../ui/screen-provider";
 import ChatSidebar from "./chat/chat-sidebar";
 import UserSidebar from "./user/user-sidebar";
+import UserSelectMenu from "../features/user/select-menu";
 
 export default function Body()
 {

@@ -3,6 +3,7 @@ import { useCreateChatStore, useStore } from "@/utils/store";
 import { useActionState, useRef } from "react";
 import UserSelectMenu from "../../features/user/select-menu";
 import { addUserToChat } from "@/utils/actions";
+import { Box, Button, Flex } from "@chakra-ui/react";
 
 export default function UserForm()
 {
@@ -35,22 +36,22 @@ export default function UserForm()
     return (
         <div>
             <form ref={formRef} onSubmit={handleSubmit} method="POST">
-                <h1>Добавить пользователей в чат</h1>
                 <div className="flex flex-col">
-                    <div>
+                    <Flex direction={"column"} gap={5}>
+                        <Box textAlign={"center"}>Добавить пользователей</Box>
                         <UserSelectMenu/>
-                        <button type="submit">Добавить</button>
-                    </div>
-                    <div>
-                        {
-                            addedUsers.map((item,i) => (
-                                <div key={i}>
-                                    {item}
-                                </div>
-                            )
-                            )
-                        }
-                    </div>
+                        <Button bg={"button"} color={"text"} size={"xs"} type="submit">Добавить</Button>
+                        <Box>
+                            {
+                                addedUsers.map((item,i) => (
+                                    <div key={i}>
+                                        {item}
+                                    </div>
+                                )
+                                )
+                            }
+                        </Box>
+                    </Flex>
                 </div>
             </form>
         </div>

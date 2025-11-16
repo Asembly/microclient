@@ -4,7 +4,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import Chat from "./chat";
 import { useStore } from "@/utils/store";
 
-export default function ChatElem(props: {chat: Chat})
+export default function ChatElement(props: {chat: Chat})
 {
     const {selectedChat, setSelectedChat, fetchMessagesByChatId} = useStore()
 
@@ -14,7 +14,7 @@ export default function ChatElem(props: {chat: Chat})
     }
 
     return (
-        <Box onClick={handler} w={"full"} _hover={{ bg: "gray" }} _active={{ bg: "gray.300" }} bg={selectedChat == props.chat ? "black" : ""} cursor="pointer">
+        <Box onClick={handler} borderRadius={"md"} px={"10%"} py={"5%"} w={"full"} _hover={{ bg: "rgba(0, 0, 0, 0.05)"}} _active={{ bg: "rgba(0, 0, 0, 0.1)"}} bg={selectedChat == props.chat ? "rgba(167, 215, 197, 0.5)" : ""} cursor="pointer">
             <Flex gap={2}>
                 <Box
                     w="30px"
@@ -26,15 +26,15 @@ export default function ChatElem(props: {chat: Chat})
                     flexGrow={0}  
                     flexBasis="30px"
                 />
-                <Flex direction={"column"}>
-                    <Flex gap={2}>
+                <Flex direction={"column"} w={"full"}>
+                    <Flex gap={2} justifyContent={"space-between"}>
                         <div>
                             {props.chat.title}
                         </div>
                         <ChatRemoveButton id={props.chat.id}/>
                     </Flex>
                     <Box fontSize={12} maxW="100%" wordBreak={"break-word"} whiteSpace={"pre-line"}>
-                        группа для одноклассинков и обычных типов
+                        Описание группы
                     </Box>
                 </Flex>
                 

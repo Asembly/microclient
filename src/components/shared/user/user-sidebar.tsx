@@ -1,4 +1,5 @@
 import AddUserBtn from "@/components/features/chat/add-user-btn";
+import UserSelectMenu from "@/components/features/user/select-menu";
 import UsersList from "@/components/widgets/user/users-list";
 import { Box, Flex } from "@chakra-ui/react";
 

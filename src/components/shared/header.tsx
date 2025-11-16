@@ -11,6 +11,8 @@ import Image from "next/image";
 import UsersList from "../widgets/user/users-list";
 import { ColorModeButton } from "../ui/color-mode";
 import { useSession } from "next-auth/react";
+import UserForm from "../widgets/user/user-form";
+import { LuBadge, LuEllipsis, LuOption, LuUser, LuUserCheck } from "react-icons/lu";
 
 export default function MessengerHeader() {
 
@@ -26,7 +28,7 @@ export default function MessengerHeader() {
         width="100%"
         px={4}>
             <Box>
-                <Drawer.Root placement="start" size="xs">
+                <Drawer.Root placement="start" size="xs" >
                     <Drawer.Trigger asChild>
                         <Box display={{base:"block", md: "none"}}>
                             <IconButton bg={"none"}>
@@ -37,9 +39,9 @@ export default function MessengerHeader() {
                     <Portal>
                         <Drawer.Backdrop />
                         <Drawer.Positioner>
-                        <Drawer.Content>
+                        <Drawer.Content bg={"myBg"}>
                             <Drawer.Header>
-                            <Drawer.Title>Groups</Drawer.Title>
+                                <Drawer.Title>Чаты</Drawer.Title>
                             </Drawer.Header>
                             <Drawer.Body>
                                 <ChatsList/>
@@ -62,12 +64,12 @@ export default function MessengerHeader() {
                 <Drawer.Root placement="end" size="xs">
                     <Drawer.Trigger asChild>
                         <Box display={{base:"block", md: "none"}}>
-                            <Image alt="user-info" width={18} height={18} src={"user-info.svg"}></Image>
+                            <LuUser size={20}></LuUser>
                         </Box>
                     </Drawer.Trigger>
                     <Portal>
                         <Drawer.Positioner>
-                            <Drawer.Content>
+                            <Drawer.Content bg={"myBg"}>
                                 <Drawer.Header>
                                     <Flex align={"center"} direction={"row"} placeItems={"flex-start"}>
                                         <Drawer.CloseTrigger asChild>
@@ -75,7 +77,7 @@ export default function MessengerHeader() {
                                         </Drawer.CloseTrigger>
                                         <Box flex={1}/>
                                         <Box>
-                                            <Drawer.Title>Пользователи</Drawer.Title>
+                                            <Drawer.Title>Участники</Drawer.Title>
                                         </Box>
                                     </Flex>
                                 </Drawer.Header>
@@ -83,14 +85,14 @@ export default function MessengerHeader() {
                                     <UsersList/>
                                 </Drawer.Body>
                                 <Drawer.Footer>
-                                    Footer
+                                    <UserForm/>
                                 </Drawer.Footer>
                             </Drawer.Content>
                         </Drawer.Positioner>
                     </Portal>
                 </Drawer.Root>
             </Box>
-            <Box>
+            <Box mdDown={{display: "none"}}>
                 <LogoutBtn/>
             </Box>
         </Flex>

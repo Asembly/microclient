@@ -4,6 +4,7 @@ import React, { useActionState, useRef, useState } from "react"
 import { useCreateChatStore } from "@/utils/store"
 import UserSelectMenu from "../../features/user/select-menu"
 import { useSession } from "next-auth/react"
+import { Box, Button, Flex, Input } from "@chakra-ui/react"
 
 export default function ChatForm()
 {
@@ -36,14 +37,14 @@ export default function ChatForm()
     return(
         <div>
             <form ref={formRef} onSubmit={handleSubmit} method="POST">
-                <h1>Создать чат</h1>
                 <div className="flex flex-col">
-                    <input type="text" value={text} onChange={(e) => setText(e.target.value)} name="title" placeholder="название"/>
-                    <div>
+                    <Flex direction={"column"} gap={5}>
+                        <Box textAlign={"center"}>Создать чат</Box>
+                        <Input size={"2xs"} type="text" value={text} onChange={(e) => setText(e.target.value)} name="title" placeholder="название"/>
                         <UserSelectMenu/>
-                        <button type="submit">Create</button>
-                    </div>
-                    <div>
+                        <Button bg={"button"} color={"text"} size={"xs"} type="submit">Создать</Button>
+                    </Flex>
+                    <Box>
                         {
                             addedUsers.map((item,i) => (
                                 <div key={i}>
@@ -52,7 +53,7 @@ export default function ChatForm()
                             )
                             )
                         }
-                    </div>
+                    </Box>
                 </div>
             </form>
         </div>

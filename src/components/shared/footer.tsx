@@ -53,7 +53,7 @@ export default function Footer() {
               {username}
             </Text>
             <Text
-              color={copied ? "accent" : "tagUser"}
+              color={copied ? "nickOwn" : "accent"}
               fontSize="sm"
               fontFamily="mono"
               truncate

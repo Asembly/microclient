@@ -21,6 +21,11 @@ type Message = {
     created_at: Date
 }
 
+type MessageLazy = {
+    messages: Message[],
+    hasMore: boolean
+}
+
 type MessageChatDTO = {
     text: string,
     author_id: string,
@@ -39,6 +44,11 @@ type ResponseRefresh = {
 }
 
 type Login = {
+    username: string | unknown,
+    password: string | unknown
+}
+
+type SignUp = {
     username: string | unknown,
     password: string | unknown
 }

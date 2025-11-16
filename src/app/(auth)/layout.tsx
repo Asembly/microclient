@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Flex alignItems={"center"} height={"dvh"} justifyContent={"center"}>
+    <Flex bg={"myBg"} alignItems={"center"} height={"dvh"} justifyContent={"center"}>
         {children}
     </Flex>
     

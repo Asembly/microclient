@@ -9,18 +9,29 @@ import MessageElement from "./message-element"
 
 export default function MessagesList() {
 
-    const {messages, selectedChat} = useStore()
+    const {messages, selectedChat, loadMessages, hasMore} = useStore()
 
     const bottomRef:any = useRef(null);
+    const messagesContainerRef = useRef(null);
 
     useEffect(() => {
-      if (bottomRef.current) {
-        bottomRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    }, [messages]);
+      const container = messagesContainerRef.current as any;
+      // bottomRef.current.scrollIntoView({ behavior: "smooth"});
+      if (!container) return;
+
+      const handleScroll = () => {
+        if (container.scrollTop === 0 && hasMore) {
+          console.log(messages[0])
+          loadMessages(selectedChat.id, messages[0]?.created_at?.toString());
+        }
+      };
+
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }, [messages, loadMessages, selectedChat]);
 
     return (
-      <Box xlDown={{w:"full"}} overflowY={"auto"} lg={{w:"70%"}} h={"100%"}>
+      <Box ref={messagesContainerRef} xlDown={{w:"full"}} overflowY={"auto"} lg={{w:"70%"}} h={"100%"}>
         <Flex alignItems={"center"}
         direction="column" gap={5}>
           {
@@ -36,12 +47,12 @@ export default function MessagesList() {
                   Чат пустой, напишите что нибудь 
                 </Box>
                 :
-                messages.map((msg) => (
-                  <MessageElement msg={msg}/>
+                messages.map((msg, i) => (
+                  <MessageElement key={i} msg={msg}/>
                 ))
           }
-          <div ref={bottomRef} />
         </Flex>
+        {/* <div ref={bottomRef} /> */}
     </Box>
     )
   }

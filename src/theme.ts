@@ -4,39 +4,39 @@ const config = defineConfig({
   theme: {
     tokens: {
       colors: {
-        msgOwn: { 
-          value: {
-            base: "",
-            _dark: "#E3F8FF" 
-          } as any
-        },
-        msgForeign: { 
-          value: {
-            base: "",
-            _dark: "#C7EAFD" 
-          } as any 
-        },
+        // msgOwn: { 
+        //   value: {
+        //     base: "",
+        //     _dark: "#E3F8FF" 
+        //   } as any
+        // },
+        // msgForeign: { 
+        //   value: {
+        //     base: "",
+        //     _dark: "#C7EAFD" 
+        //   } as any 
+        // },
         error: {
           value: {
-            base:"",
+            base:"#E96C5C",
             _dark: "#FF6B6B"
           } as any
         },
         button: { 
           value: {
-            base: "",
+            base: "#A7D7C5",
             _dark: "#76C7F4" 
           } as any 
         },
         accent: { 
           value: {
-            base: "",
+            base: "#6B8CBC",
             _dark: "#9AEAFF" 
           } as any 
         },
         input: { 
           value: {
-            base: "",
+            base: "#E6F4EA",
             _dark: "#D6F1FA" 
           } as any 
         },
@@ -48,7 +48,7 @@ const config = defineConfig({
         },
         topBar: { 
           value: {
-            base: "",
+            base: "#A7D7C5",
             _dark: "#133C55" 
           } as any 
         },
@@ -66,19 +66,20 @@ const config = defineConfig({
         },
         myBg: { 
           value: {
-            base: "",
+            
+            base: "#D9EDDF",
             _dark: "#182C3A" 
           } as any 
         },
         myBgAlt: { 
           value: {
-            base: "",
+            base: "#E6F4EA",
             _dark: "#24425C" 
           } as any 
         },
         text: { 
           value: {
-            base: "",
+            base: "#2C6E49",
             _dark: "#E5F7FF" 
           } as any 
         },
@@ -102,19 +103,19 @@ const config = defineConfig({
         },
         nickForeign: { 
           value: {
-            base: "",
+            base: "#E76EFF",
             _dark: "#A572E8" 
           } as any 
         },
         nickOwn: { 
           value: {
-            base: "",
+            base: "#726EFF",
             _dark: "#54C6EB" 
           } as any 
         },
         msgText: { 
           value: {
-            base: "",
+            base: "#2C6E49",
             _dark: "#182C3A" 
           } as any 
         },
@@ -138,7 +139,7 @@ const config = defineConfig({
       scrollbarColor: "#BBB #222",
     },
     "&::-webkit-scrollbar-thumb": {
-      background: "msgText",
+      background: "gray",
       borderRadius: "4px",
     },
     "&::-webkit-scrollbar-track": {
